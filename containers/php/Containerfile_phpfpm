@@ -96,6 +96,8 @@ RUN apt-get update && apt-get upgrade -y \
   && apt-get autoremove -y && apt-get clean
 
 # podman build -t php-fpm-apphp:8.2.19 -f Containerfile_php-fpm --logfile=Containerfile_php-fpm_$(date +20%y-%m-%d)_build.log
-# podman run -d --name=apphp_phpfpm --tz=America/Sao_Paulo -p 9999:9000 php-fpm-apphp:8.2.19
-# podman logs -f apphp_phpfpm
+# podman run -d --name=appzdp_phpfpm --tz=America/Sao_Paulo --net=host localhost/php-fpm-apphp:8.2.19 ; podman logs -f appzdp_phpfpm
+# podman run -d --name=appzdp_phpfpm --tz=America/Sao_Paulo --net=host appzdp-phpfpm:8.2.19 ; podman logs -f appzdp_phpfpm
+# podman run -d --name=appzdp_phpfpm --tz=America/Sao_Paulo -p 9999:9000 appzdp-phpfpm:8.2.19
+# podman logs -f appzdp_phpfpm
 

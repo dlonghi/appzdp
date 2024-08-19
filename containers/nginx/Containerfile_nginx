@@ -1,4 +1,4 @@
-FROM docker.io/nginx:1.25.5-alpine
+FROM docker.io/nginx:1.27.1-alpine
 
 WORKDIR /app
 
@@ -14,16 +14,21 @@ RUN apk upgrade --update --no-cache --no-check-certificate \
  && chmod 600 /etc/nginx/server.key \
  && apk del openssl \
  && apk add shadow --update --no-cache \
- && groupmod -g 2000 nginx \
- && usermod -u 2000 -g 2000 nginx \
+ && groupmod -g 12000 nginx \
+ && usermod -u 12000 -g 12000 nginx \
  && apk del shadow \
  && rm -rf /var/cache/apk/* \
  && echo \
- && curl -ko /etc/nginx/nginx.conf https://raw.githubusercontent.com/dlonghi/appx-php-nginx/main/nginx/nginx_podman.conf \
+ && curl -ko /etc/nginx/nginx.conf https://raw.githubusercontent.com/dlonghi/appzdp/main/containers/nginx/nginx_container.conf \
  && mkdir -p /app/public \
  && curl -ko /usr/share/nginx/html/favicon.ico https://raw.githubusercontent.com/dlonghi/containers/main/favicon.ico \
  && echo '<? echo "<pre>"; print_r(get_defined_vars()); echo "</pre>"; phpinfo(); xdebug_info();' > /usr/share/nginx/html/info.php \
- && curl -ko /app/public/index.html https://raw.githubusercontent.com/dlonghi/appx-php/main/nginx/index.html \
+ && curl -ko /app/public/index.html https://raw.githubusercontent.com/dlonghi/containers/main/assets/index_wheel.html \
  && curl -ko /app/public/favicon.ico https://raw.githubusercontent.com/dlonghi/containers/main/favicon.ico \
  && echo '<? echo "<pre>"; print_r(get_defined_vars()); echo "</pre>"; phpinfo(); xdebug_info();' > /app/public/info_nginx.php \
  && echo '<? echo "<pre>"; print_r(get_defined_vars()); echo "</pre>"; phpinfo(); xdebug_info();' > /app/public/info.php
+
+# podman build -t appzdp-nginx:1.27.1 -f Containerfile_nginx --logfile=Containerfile_nginx_$(date +20%y-%m-%d)_build.log
+# podman run -d --name=appzdp_nginx --tz=America/Sao_Paulo --net=host appzdp-nginx:1.27.1
+# podman run -d --name=appzdp_nginx --tz=America/Sao_Paulo -p 8888:80 -p 4444:443 appzdp-nginx:1.27.1
+# podman logs -f appzdp_nginx
