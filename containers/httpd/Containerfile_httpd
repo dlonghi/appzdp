@@ -1,0 +1,9 @@
+FROM docker.io/httpd:2.4.62
+
+
+
+
+
+# podman build -t appzdp-httpd:8.2.19 -f Containerfile_httpd --logfile=Containerfile_httpd_$(date +20%y-%m-%d)_build.log
+# podman run -d --name=appzdp_httpd --tz=America/Sao_Paulo -p 8888:80 -p 4444:443 appzdp-httpd:8.2.19
+# podman logs -f appzdp_httpd
